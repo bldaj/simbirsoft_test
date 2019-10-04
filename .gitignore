@@ -1,0 +1,12 @@
+# Environments
+.venv
+venv/
+ENV/env.bak/
+venv.bak/
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# IDE
+.idea/
