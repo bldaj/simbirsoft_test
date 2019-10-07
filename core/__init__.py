@@ -1,34 +1,16 @@
-import os
-
 from flask import Flask
 
+from core.config import SQLALCHEMY_DATABASE_URI
+from core.models import db
 
-def create_app(test_config=None, *args, **kwargs):
-    print('args: ', args)
-    print('kwargs: ', kwargs)
 
+def create_app():
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        FLASK_ENV='development',
-        DATABASE=os.path.join(app.instance_path, 'simbirsoft.sqlite'),
-    )
+    app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.app_context().push()
 
-    if test_config is None:
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        app.config.from_mapping(test_config)
-
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
-
-    @app.route('/')
-    def hello_world():
-        return 'Hell'
-
-    from . import db
     db.init_app(app)
+    db.create_all()
 
     return app
