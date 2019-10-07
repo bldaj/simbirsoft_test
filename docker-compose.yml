@@ -2,14 +2,21 @@ version: '3'
 
 services:
   flask:
+    container_name: flask
     image: webapp-flask
     build:
       context: .
       dockerfile: Dockerfile-flask
     volumes:
       - "./:/app"
+    depends_on:
+      - db
+    env_file:
+      - config/postgres/postgres.env
+    command: ['./scripts/wait-for-postgres.sh', 'db', './scripts/run_server.sh']
 
   nginx:
+    container_name: nginx
     image: webapp-nginx
     build:
       context: .
@@ -18,3 +25,14 @@ services:
       - 9999:80
     depends_on:
       - flask
+
+  db:
+    container_name: postgres
+    image: postgres:11
+    env_file:
+      - config/postgres/postgres.env
+    volumes:
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:
