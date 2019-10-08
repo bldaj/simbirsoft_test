@@ -1,13 +1,9 @@
-from core import create_app
-from core.models import Cats, db
+from core import create_app, login_manager
+from core.models import User
 
 app = create_app()
 
 
-@app.route('/')
-def hello_world():
-    c = Cats(name='cat example')
-    db.session.add(c)
-    db.session.commit()
-    print(Cats.query.all())
-    return '{}'.format(Cats.query.all())
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
