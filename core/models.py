@@ -1,13 +1,15 @@
 import flask_sqlalchemy
+from flask_login import UserMixin
 
 db = flask_sqlalchemy.SQLAlchemy()
 
 
-class Cats(db.Model):
-    __tablename__ = 'cats'
+class User(UserMixin, db.Model):
+    __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
+    username = db.Column(db.String(100))
+    password = db.Column(db.String(100))
 
     def __repr__(self):
-        return f'{self.name}'
+        return f'{self.username}'
