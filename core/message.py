@@ -13,4 +13,4 @@ def send():
     if form.validate_on_submit():
         print('str: ', form.message.data)
         print('str type: ', form.message.type)
-    return render_template('messages/send.html', title='Send Message', form=form)
+    return render_template('message/send.html', title='Send Message', form=form)
