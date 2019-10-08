@@ -6,7 +6,6 @@ from core.config import SQLALCHEMY_DATABASE_URI
 from core.models import db
 
 login_manager = LoginManager()
-login_manager.view = 'auth.login'
 
 
 def create_app():
@@ -24,5 +23,8 @@ def create_app():
 
     from core import auth
     app.register_blueprint(auth.bp)
+
+    from core import message
+    app.register_blueprint(message.bp)
 
     return app
