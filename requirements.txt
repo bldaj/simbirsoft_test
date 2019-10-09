@@ -1,7 +1,7 @@
 Click==7.0
 dominate==2.4.0
 Flask==1.1.1
-Flask-Bootstrap==3.3.7.1
+Flask-Bootstrap4==4.0.2
 Flask-Login==0.4.1
 flask-redis==0.4.0
 Flask-SQLAlchemy==2.4.1
