@@ -14,5 +14,5 @@ redis_host = os.environ['REDIS_HOST']
 redis_port = os.environ['REDIS_PORT']
 redis_db = os.environ['REDIS_DB']
 
-REDIS_MESSAGE_TTL = 5 * 60  # 5 minutes
+REDIS_MESSAGE_TTL = 300  # 5 minutes
 REDIS_URL = f'redis://{redis_host}:{redis_port}/{redis_db}'
