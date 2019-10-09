@@ -12,6 +12,9 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
+    if User.query.first():
+        return redirect(url_for('auth.login'))
+
     if current_user.is_authenticated:
         return redirect(url_for('messages.read'))
 
@@ -26,6 +29,9 @@ def register():
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
+    if not User.query.first():
+        return redirect(url_for('auth.register'))
+
     if current_user.is_authenticated:
         return redirect(url_for('messages.read'))
 

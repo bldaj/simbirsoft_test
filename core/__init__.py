@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_redis import FlaskRedis
@@ -31,5 +31,9 @@ def create_app():
 
     from core import message
     app.register_blueprint(message.bp)
+
+    @app.route('/')
+    def index():
+        return redirect(url_for('auth.register'))
 
     return app
