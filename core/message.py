@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from flask import Blueprint, render_template
+from flask import Blueprint, redirect, render_template, url_for
 from flask_login import login_required
 
 from core import redis_client
@@ -25,4 +25,13 @@ def send():
 def read():
     keys = redis_client.keys('messages:*')
     messages_ = redis_client.mget(keys)
+    messages_ = dict(zip(keys, messages_))
+
     return render_template('messages/read.html', messages=messages_)
+
+
+@bp.route('/delete/<string:key>')
+@login_required
+def delete(key):
+    redis_client.delete(key)
+    return redirect(url_for('messages.read'))

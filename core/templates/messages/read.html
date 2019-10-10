@@ -2,15 +2,15 @@
 
 {% block app_content %}
     {% if messages %}
-        {% for message in messages %}
+        {% for key, message in messages.items() %}
         <div style="display: flex; justify-content: center;">
             <div class="card text-white bg-dark" style="width: 100rem; margin-top: 1rem;">
                 <div class="card-body">
                     <p class="card-text">{{ message.decode('utf-8') }}</p>
+                    <a href="{{ url_for('messages.delete', key=key) }}" class="btn btn-danger">Delete</a>
                 </div>
             </div>
         </div>
-
         {% endfor %}
     {% else%}
         <div style="display: flex; justify-content: center;">
